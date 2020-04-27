@@ -1,0 +1,143 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:test1="clr-namespace:WpfApp1.Test"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="480" Width="720">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <!--<ColumnDefinition Width="1*" MaxWidth="240"/>-->
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <!--<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DockPanel HorizontalAlignment="Center">
+                <Button Content="新建任务" Width="60"/>
+                <Button Content="导出" Width="60"/>
+            </DockPanel>
+            <TreeView Grid.Row="1" Name="UserWorks">
+                <TreeViewItem Header="任务1">
+                    <TreeViewItem Header="页面1"></TreeViewItem>
+                    <TreeViewItem Header="页面2"></TreeViewItem>
+                    <TreeViewItem Header="页面3"></TreeViewItem>
+                    <TreeViewItem Header="表1"></TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header="任务2"></TreeViewItem>
+                <TreeViewItem Header="任务3"></TreeViewItem>
+                <TreeViewItem Header="任务4"></TreeViewItem>
+            </TreeView>
+        </Grid>-->
+        <!--<GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>-->
+        <Grid Name="ShowPosition" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" MaxHeight="360"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <GroupBox Height="40" Header="URL链接">
+                    <TextBox Name="SetUrl"/>
+                </GroupBox>
+                <Grid>
+                    <GroupBox Header="数据处理">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="3*" MaxWidth="150"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="删除" VerticalAlignment="Top" Click="Button_Click_Del"/>
+                            <Button Content="清空" VerticalAlignment="Center" Click="Button_Click_Clear"/>
+                            <Button Content="创建表" VerticalAlignment="Bottom" Click="Button_Click_Create"/>
+                            <ListBox Grid.Column="1" x:Name="MyLable" MinWidth="60" Margin="5,0,0,0"/>
+                            <StackPanel Margin="5" Grid.Column="2">
+                                <GroupBox Header="数据定位">
+                                    <StackPanel>
+                                        <CheckBox Name="reviewitem">
+                                            <DockPanel>
+                                                <TextBlock Text="列表数据" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                <TextBox Name="reviewitemLocate" MinWidth="210"/>
+                                                <TextBlock Text="定位方式：" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                <ComboBox MinWidth="45">
+                                                    <ComboBoxItem Tag="L" Content="标签名"/>
+                                                    <ComboBoxItem Tag="X" Content="XPath" />
+                                                    <ComboBoxItem Tag="CS" Content="Css选择器"/>
+                                                    <ComboBoxItem Tag="CL" Content="Class内容"/>
+                                                    <ComboBoxItem Tag="I" Content="ID"/>
+                                                </ComboBox>
+                                            </DockPanel>
+                                        </CheckBox>
+                                        <CheckBox Name="NextPage">
+                                            <DockPanel>
+                                                <TextBlock Text="下一页按钮" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                <TextBox Name="NextPageLocate" MinWidth="210"/>
+                                                <TextBlock Text="定位方式：" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                <ComboBox MinWidth="45">
+                                                    <ComboBoxItem Tag="L" Content="标签名"/>
+                                                    <ComboBoxItem Tag="X" Content="XPath" />
+                                                    <ComboBoxItem Tag="CS" Content="Css选择器"/>
+                                                    <ComboBoxItem Tag="CL" Content="Class内容"/>
+                                                    <ComboBoxItem Tag="I" Content="ID"/>
+                                                </ComboBox>
+                                            </DockPanel>
+                                        </CheckBox>
+                                        <CheckBox Name="MoreInfo">
+                                            <DockPanel>
+                                                <TextBlock Text="加载更多按钮" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                <TextBox Name="MoreInfoLocate" MinWidth="210"/>
+                                                <TextBlock Text="定位方式：" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                                <ComboBox MinWidth="45">
+                                                    <ComboBoxItem Tag="L" Content="标签名"/>
+                                                    <ComboBoxItem Tag="X" Content="XPath" />
+                                                    <ComboBoxItem Tag="CS" Content="Css选择器"/>
+                                                    <ComboBoxItem Tag="CL" Content="Class内容"/>
+                                                    <ComboBoxItem Tag="I" Content="ID"/>
+                                                </ComboBox>
+                                            </DockPanel>
+                                        </CheckBox>
+                                    </StackPanel>
+                                </GroupBox>
+                                <DockPanel>
+                                    <TextBlock Text="数据采集规则：" VerticalAlignment="Center"/>
+                                    <DockPanel x:Name="MyLableTypes" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <RadioButton Tag="L" Content="标签名"/>
+                                        <RadioButton Tag="X" Content="XPath" />
+                                        <RadioButton Tag="CS" Content="Css选择器"/>
+                                        <RadioButton Tag="CL" Content="Class内容"/>
+                                        <RadioButton Tag="I" Content="ID"/>
+                                    </DockPanel>
+                                    <Button Height="20" Width="45" Margin="5,0,0,0" Content="添加" Click="Button_Click" HorizontalAlignment="Right" HorizontalContentAlignment="Center"/>
+                                </DockPanel>
+                                <StackPanel>
+                                    <TextBox x:Name="LableContent" MinHeight="60"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+                <DockPanel HorizontalAlignment="Center">
+                    <Button Content="开始执行" Click="Btn_Start" FontSize="16" Width="140" Margin="0,0,16,0"/>
+                    <Button Content="导出为Excel" Click="ButtonExport_Click" FontSize="16" Width="140"/>
+                </DockPanel>
+            </StackPanel>
+            <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch"/>
+            <DataGrid Grid.Row="2" MaxColumnWidth="210" x:Name="ListInfo" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      SelectionUnit="Cell" SelectionMode="Extended" AutoGenerateColumns="True" ItemsSource="{Binding Path=d1}">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+            </DataGrid>
+        </Grid>
+
+    </Grid>
+</Window>
