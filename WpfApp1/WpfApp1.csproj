@@ -118,12 +118,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MyCounts\WorksDataTreeViewItem.cs" />
-    <Compile Include="Test\Class1.cs" />
     <Compile Include="Test\DriverItemController.cs" />
     <Compile Include="Test\DriverItemView.cs" />
-    <Compile Include="Test\ListViewShowInfo.cs" />
-    <Compile Include="Test\MyInfos_Untreated.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

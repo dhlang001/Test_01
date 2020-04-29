@@ -9,32 +9,9 @@
         Title="MainWindow" Height="480" Width="720">
     <Grid>
         <Grid.ColumnDefinitions>
-            <!--<ColumnDefinition Width="1*" MaxWidth="240"/>-->
             <ColumnDefinition Width="3"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <!--<Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <DockPanel HorizontalAlignment="Center">
-                <Button Content="新建任务" Width="60"/>
-                <Button Content="导出" Width="60"/>
-            </DockPanel>
-            <TreeView Grid.Row="1" Name="UserWorks">
-                <TreeViewItem Header="任务1">
-                    <TreeViewItem Header="页面1"></TreeViewItem>
-                    <TreeViewItem Header="页面2"></TreeViewItem>
-                    <TreeViewItem Header="页面3"></TreeViewItem>
-                    <TreeViewItem Header="表1"></TreeViewItem>
-                </TreeViewItem>
-                <TreeViewItem Header="任务2"></TreeViewItem>
-                <TreeViewItem Header="任务3"></TreeViewItem>
-                <TreeViewItem Header="任务4"></TreeViewItem>
-            </TreeView>
-        </Grid>-->
-        <!--<GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>-->
         <Grid Name="ShowPosition" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" MaxHeight="360"/>

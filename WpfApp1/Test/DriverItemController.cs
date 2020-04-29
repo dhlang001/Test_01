@@ -17,9 +17,6 @@ namespace WpfApp1.Test
 {
     class DriverItemController
     {
-        //private DriverItemView dv = new DriverItemView();
-        //private List<string[]> fields = new List<string[]>();
-        private DataTable dt;
 
         public DriverItemController()
         {
@@ -27,8 +24,10 @@ namespace WpfApp1.Test
         }
 
         /// <summary>
-        /// 
+        /// 导出为txt
         /// </summary>
+        /// <param name="dt">要保存的数据</param>
+        /// <param name="file">文件</param>
         public void FileToString(string dt, Microsoft.Win32.SaveFileDialog file) {
             FileStream fs1 = new FileStream(file.FileName, FileMode.Create, FileAccess.ReadWrite);
             StreamWriter sw = new StreamWriter(fs1);

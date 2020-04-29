@@ -37,7 +37,6 @@ namespace WpfApp1.Test
         {
             this.GoToUrl = GoToUrl;
             GetInfos(GoToUrl);
-            MyClassify();
             dv = new DriverItemController();
         }
 
@@ -56,7 +55,7 @@ namespace WpfApp1.Test
                     try
                     {
                         (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
-                        return driver.FindElement(MyDetermineBy(reviewiteminfo));
+                        return driver.FindElement(By.TagName("*"));
                     }
                     catch (Exception)
                     {
@@ -69,7 +68,7 @@ namespace WpfApp1.Test
                     try
                     {
                         (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
-                        return driver.FindElement(MyDetermineBy(reviewiteminfo));
+                        return driver.FindElement(By.TagName("*"));
                     }
                     catch (Exception)
                     {
@@ -138,21 +137,11 @@ namespace WpfApp1.Test
                                 }
                             });
                         }
-                        catch (Exception){}
+                        catch (Exception){ break; }
                     }
                 }
                 catch (Exception) { }
             }
-        }
-
-        private void MyClassify()
-        {
-
-        }
-
-        private string GetTagsInfo(string v1, IWebDriver driver)
-        {
-            return driver.FindElement(By.TagName(v1)).Text;
         }
 
         /// <summary>

@@ -23,7 +23,6 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Test.MyInfos_Untreated> strs = new List<Test.MyInfos_Untreated>();
         private DataTable d1 = new DataTable();
         private Test.DriverItemView _myView;
         private Test.DriverItemController _myCtrler;
@@ -38,40 +37,6 @@ namespace WpfApp1
             //Test2();
 
         }
-
-        private void Test1()
-        {
-            Test.Class1 c1 = new Test.Class1("https://movie.douban.com/tag/");
-            List<Test.ListViewShowInfo> asd = new List<Test.ListViewShowInfo>();
-            asd = c1.Infos;
-            for (int i = 0; i < asd.Count; i++)
-            {
-                ListInfo.Items.Add(asd[i]);
-            }
-
-            TreeView LB = new TreeView();
-            TreeViewItem LBI = new TreeViewItem();
-            LBI.Header = "筛选";
-            for (int i = 0; i < ListInfo.Columns.Count; i++)
-            {
-                CheckBox ck = new CheckBox();
-                ck.Content = "第 " + i + " 列";
-                ck.IsChecked = true;
-                ck.Tag = i;
-                ck.Checked += CheckBox_Checked;
-                ck.Unchecked += CheckBox_UnChecked;
-                LBI.Items.Add(ck);
-            }
-            LB.Items.Add(8);
-            (ListInfo.Parent as Grid).Children.Add(LB);
-            LB.SetValue(Grid.ColumnProperty, 0);
-        }
-
-        private void Test2()
-        {
-            //this.test1.Text= new Test.Class2("https://movie.douban.com/subject/34805219/").ToString(1);//https://www.jianshu.com/p/ea0022394140
-        }
-
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -157,33 +122,6 @@ namespace WpfApp1
                 d1.Columns.Add(_columns);
             }
             ListInfo.ItemsSource = d1.DefaultView;
-
-            /*
-            ListInfo.Columns[0].Header = null;
-            DockPanel dock = new DockPanel();
-            TextBlock t1 = new TextBlock();
-            Button b1 = new Button();
-            t1.Text = "序号";
-            t1.VerticalAlignment = VerticalAlignment.Center;
-            b1.Content = "删除";
-            dock.Children.Add(t1);
-            dock.Children.Add(b1);
-            ListInfo.Columns[0].Header = dock;
-            for (int i = 1; i < ListInfo.Columns.Count; i++)
-            {
-                DockPanel docks = new DockPanel();
-                TextBlock ts = new TextBlock();
-                Button bs = new Button();
-                ts = new TextBlock();
-                ts.Text = "字段" + i;
-                ts.VerticalAlignment = VerticalAlignment.Center;
-                bs.Content = "删除";
-                docks.Children.Add(ts);
-                docks.Children.Add(bs);
-                ListInfo.Columns[i].Header = docks;
-            }
-            */
-
 
             if (reviewitem.IsChecked == true)
             {
