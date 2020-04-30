@@ -33,14 +33,14 @@ namespace WpfApp1.Test
 
         }
 
-        public DriverItemView(string GoToUrl = "https://movie.douban.com/tag/")
+        public DriverItemView(string GoToUrl)
         {
             this.GoToUrl = GoToUrl;
             GetInfos(GoToUrl);
             dv = new DriverItemController();
         }
 
-        public void GetInfos(string GoToUrl = "https://movie.douban.com/tag/")
+        public void GetInfos(string GoToUrl)
         {
             infos.Clear();
             infos = null;
@@ -168,11 +168,6 @@ namespace WpfApp1.Test
             }
         }
 
-        public string ToString(int a)
-        {
-            return BodyString;
-        }
-
         /// <summary>
         /// 获取字段
         /// </summary>
@@ -186,6 +181,11 @@ namespace WpfApp1.Test
             {
                 fields.Add(new string[] { (items[i] as TextBlock).Tag.ToString(), (items[i] as TextBlock).Text });
             }
+        }
+
+        public string ToString(int a)
+        {
+            return BodyString;
         }
     }
 }
