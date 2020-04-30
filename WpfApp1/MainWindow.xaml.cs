@@ -58,6 +58,7 @@ namespace WpfApp1
                 {
                     case true:
                         t1.Tag = (item as RadioButton).Tag;
+                        MyLable.Items.Add(t1);
                         break;
                     case false:
                         break;
@@ -65,7 +66,6 @@ namespace WpfApp1
                         break;
                 }
             }
-            MyLable.Items.Add(t1);
         }
 
         private void Btn_Start(object sender, RoutedEventArgs e)
