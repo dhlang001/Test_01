@@ -181,7 +181,7 @@ namespace WpfApp1
 
         private void reviewitem_Unchecked(object sender, RoutedEventArgs e)
         {
-            _myView.Reviewiteminfo = new string[] { string.Empty, string.Empty };
+            _myView.Reviewiteminfo = null;
         }
 
         private void NextPage_Checked(object sender, RoutedEventArgs e)
@@ -194,7 +194,7 @@ namespace WpfApp1
 
         private void NextPage_Unchecked(object sender, RoutedEventArgs e)
         {
-            _myView.NextPageLocate = new string[] { string.Empty, string.Empty };
+            _myView.NextPageLocate = null;
         }
 
         private void MoreInfo_Checked(object sender, RoutedEventArgs e)
@@ -207,7 +207,7 @@ namespace WpfApp1
 
         private void MoreInfo_Unchecked(object sender, RoutedEventArgs e)
         {
-            _myView.MoreInfoLocate = new string[] { string.Empty, string.Empty };
+            _myView.MoreInfoLocate = null;
         }
     }
 }

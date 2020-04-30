@@ -18,9 +18,9 @@ namespace WpfApp1.Test
         private DriverItemController dv;
         private string GoToUrl = string.Empty;
         private string BodyString = string.Empty;
-        private string[] reviewiteminfo = { string.Empty, string.Empty };
-        private string[] nextPageLocate = { string.Empty, string.Empty };
-        private string[] moreInfoLocate = { string.Empty, string.Empty };
+        private string[] reviewiteminfo = null;//{ string.Empty, string.Empty };
+        private string[] nextPageLocate = null;
+        private string[] moreInfoLocate = null;
         private List<string[]> fields = new List<string[]>();
         private List<string[]> infos = new List<string[]>();
         public List<string[]> Infos { get => infos; set => infos = value; }
@@ -91,7 +91,7 @@ namespace WpfApp1.Test
                                 driver.FindElements(MyDetermineBy(moreInfoLocate));
                             }
                             catch (Exception) { }
-                            if (reviewiteminfo.Equals( new string[] { string.Empty, string.Empty }))
+                            if (reviewiteminfo!=null)
                             {
                                 webDriverWait.Until(d => {
                                     try
