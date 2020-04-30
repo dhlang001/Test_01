@@ -67,15 +67,17 @@ namespace WpfApp1.Test
                 webDriverWait.Until(d => {
                     try
                     {
-                        (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
-                        return driver.FindElement(By.TagName("*"));
+                        (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform(); 
+                        driver.FindElement(By.TagName("*"));
+                        return true;
                     }
                     catch (Exception)
                     {
                         (new Actions(driver)).SendKeys(Keys.Control + Keys.Home).Perform();
-                        return null;
+                        return false;
                     }
                 });
+
                 this.BodyString = driver.FindElement(By.TagName("body")).Text;
 
                 try

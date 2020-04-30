@@ -73,25 +73,31 @@ namespace WpfApp1
             if (SetUrl.Text!="")
             {
                 //防止空数据
-                _myView.GetInfos(SetUrl.Text);
-                List<string[]> vs = _myView.Infos;
-                int dataColumns = vs.Count;
-                for (int i = 0; i < dataColumns; i++)
+                if (_myView.MoreInfoLocate[1]!=""|| _myView.NextPageLocate[1]!="")
                 {
-                    DataRow row1 = d1.NewRow();
-                    //循环添加行数据
-                    for (int j = 0; j < ListInfo.Columns.Count - 1; j++)
+                    _myView.GetInfos(SetUrl.Text);
+                    List<string[]> vs = _myView.Infos;
+                    int dataColumns = vs.Count;
+                    for (int i = 0; i < dataColumns; i++)
                     {
-                        row1[d1.Columns[j + 1].ColumnName] = vs[i][j];//d1.Columns[j].ColumnName + " " + "strtest_" + j;
+                        DataRow row1 = d1.NewRow();
+                        //循环添加行数据
+                        for (int j = 0; j < ListInfo.Columns.Count - 1; j++)
+                        {
+                            row1[d1.Columns[j + 1].ColumnName] = vs[i][j];
+                        }
+                        d1.Rows.Add(row1);
                     }
-                    d1.Rows.Add(row1);
+                }
+                else
+                {
+                    MessageBox.Show("非法数值");
                 }
             }
             else
             {
                 MessageBox.Show("Url链接不能为空");
             }
-            //MessageBox.Show(((ListInfo.Columns[2] as DataGridTextColumn).Binding as Binding).Path.Path);//获取列名
         }
 
         private void Button_Click_Del(object sender, RoutedEventArgs e)
@@ -123,21 +129,28 @@ namespace WpfApp1
             }
             ListInfo.ItemsSource = d1.DefaultView;
 
-            if (reviewitem.IsChecked == true)
+            if (reviewitem.IsChecked!=null|| NextPage.IsChecked == null)
             {
-                string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
-                _myView.Reviewiteminfo = new string[] { asd, reviewitemLocate.Text };
-            }
-            if (NextPage.IsChecked == true)
-            {
-                _myView.NextPageLocate = new string[] { (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), NextPageLocate.Text };
-            }
-            if (MoreInfo.IsChecked == true)
-            {
-                _myView.MoreInfoLocate = new string[] { (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), MoreInfoLocate.Text };
-            }
+                if (reviewitem.IsChecked == true)
+                {
+                    string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
+                    _myView.Reviewiteminfo = new string[] { asd, reviewitemLocate.Text };
+                }
+                if (NextPage.IsChecked == true)
+                {
+                    _myView.NextPageLocate = new string[] { (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), NextPageLocate.Text };
+                }
+                if (MoreInfo.IsChecked == true)
+                {
+                    _myView.MoreInfoLocate = new string[] { (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), MoreInfoLocate.Text };
+                }
 
-            _myView.GetFields(MyLable.Items);
+                _myView.GetFields(MyLable.Items);
+            }
+            else
+            {
+                MessageBox.Show("非法传值");
+            }
         }
 
         private void ButtonExport_Click(object sender, RoutedEventArgs e)
@@ -151,7 +164,7 @@ namespace WpfApp1
 
                     Title = "保存为:",
                     RestoreDirectory = true,
-                    Filter = "Excel 97 - 2003 工作薄(*.xls)|*.xls|Excel 工作薄(*.*)|*.xlsx|保存本页文本(*.txt)|*.txt|所有文件(*.*)|*.*"
+                    Filter = "Excel 97 - 2003 工作薄(*.xls)|*.xls|Excel 工作薄(*.xlsx)|*.xlsx|保存本页文本(*.txt)|*.txt|所有文件(*.*)|*.*"
                 };
                 //op.Multiselect = false;
                 op.Title = "请选择文件夹";
