@@ -37,7 +37,7 @@
                             <StackPanel Margin="5" Grid.Column="2">
                                 <GroupBox Header="数据定位">
                                     <StackPanel>
-                                        <CheckBox Name="reviewitem">
+                                        <CheckBox Name="reviewitem" Checked="reviewitem_Checked" Unchecked="reviewitem_Unchecked">
                                             <DockPanel>
                                                 <TextBlock Text="列表数据" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                 <TextBox Name="reviewitemLocate" MinWidth="210"/>
@@ -51,7 +51,7 @@
                                                 </ComboBox>
                                             </DockPanel>
                                         </CheckBox>
-                                        <CheckBox Name="NextPage">
+                                        <CheckBox Name="NextPage" Checked="NextPage_Checked" Unchecked="NextPage_Unchecked">
                                             <DockPanel>
                                                 <TextBlock Text="下一页按钮" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                 <TextBox Name="NextPageLocate" MinWidth="210"/>
@@ -65,7 +65,7 @@
                                                 </ComboBox>
                                             </DockPanel>
                                         </CheckBox>
-                                        <CheckBox Name="MoreInfo">
+                                        <CheckBox Name="MoreInfo" Checked="MoreInfo_Checked" Unchecked="MoreInfo_Unchecked">
                                             <DockPanel>
                                                 <TextBlock Text="加载更多按钮" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                 <TextBox Name="MoreInfoLocate" MinWidth="210"/>

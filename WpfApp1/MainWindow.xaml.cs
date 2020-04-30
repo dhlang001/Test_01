@@ -73,7 +73,11 @@ namespace WpfApp1
             if (SetUrl.Text!="")
             {
                 //防止空数据
-                if (_myView.MoreInfoLocate[1]!=""|| _myView.NextPageLocate[1]!="")
+                if ((reviewitem.IsChecked == true && _myView.Reviewiteminfo[1] == "") || (NextPage.IsChecked == true && _myView.NextPageLocate[1] == ""))
+                {
+                    MessageBox.Show("非法数值");
+                }
+                else
                 {
                     _myView.GetInfos(SetUrl.Text);
                     List<string[]> vs = _myView.Infos;
@@ -88,10 +92,6 @@ namespace WpfApp1
                         }
                         d1.Rows.Add(row1);
                     }
-                }
-                else
-                {
-                    MessageBox.Show("非法数值");
                 }
             }
             else
@@ -129,28 +129,8 @@ namespace WpfApp1
             }
             ListInfo.ItemsSource = d1.DefaultView;
 
-            if (reviewitem.IsChecked!=null|| NextPage.IsChecked == null)
-            {
-                if (reviewitem.IsChecked == true)
-                {
-                    string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
-                    _myView.Reviewiteminfo = new string[] { asd, reviewitemLocate.Text };
-                }
-                if (NextPage.IsChecked == true)
-                {
-                    _myView.NextPageLocate = new string[] { (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), NextPageLocate.Text };
-                }
-                if (MoreInfo.IsChecked == true)
-                {
-                    _myView.MoreInfoLocate = new string[] { (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), MoreInfoLocate.Text };
-                }
+            _myView.GetFields(MyLable.Items);
 
-                _myView.GetFields(MyLable.Items);
-            }
-            else
-            {
-                MessageBox.Show("非法传值");
-            }
         }
 
         private void ButtonExport_Click(object sender, RoutedEventArgs e)
@@ -189,6 +169,45 @@ namespace WpfApp1
                 MessageBox.Show("导出项目为空");
             }
         }
-       
+
+        private void reviewitem_Checked(object sender, RoutedEventArgs e)
+        {
+            if (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem != null)
+            {
+                string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
+                _myView.Reviewiteminfo = new string[] { asd, reviewitemLocate.Text };
+            }
+        }
+
+        private void reviewitem_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _myView.Reviewiteminfo = new string[] { string.Empty, string.Empty };
+        }
+
+        private void NextPage_Checked(object sender, RoutedEventArgs e)
+        {
+            if (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem != null)
+            {
+                _myView.NextPageLocate = new string[] { (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), NextPageLocate.Text };
+            }
+        }
+
+        private void NextPage_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _myView.NextPageLocate = new string[] { string.Empty, string.Empty };
+        }
+
+        private void MoreInfo_Checked(object sender, RoutedEventArgs e)
+        {
+            if (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem != null)
+            {
+                _myView.MoreInfoLocate = new string[] { (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), MoreInfoLocate.Text };
+            }
+        }
+
+        private void MoreInfo_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _myView.MoreInfoLocate = new string[] { string.Empty, string.Empty };
+        }
     }
 }
