@@ -165,7 +165,7 @@ namespace WpfApp1.Test
                             catch (Exception) { break; }
                         }
                     }
-                    catch (Exception e) { 
+                    catch (Exception) { 
                         //MessageBox.Show(e.Message); 
                     }
                 }
