@@ -23,21 +23,30 @@ namespace WpfApp1.Test
         private string[] moreInfoLocate = null;
         private List<string[]> fields = new List<string[]>();
         private List<string[]> infos = new List<string[]>();
+
         public List<string[]> Infos { get => infos; set => infos = value; }
         public string[] Reviewiteminfo { get => reviewiteminfo; set => reviewiteminfo = value; }
         public string[] NextPageLocate { get => nextPageLocate; set => nextPageLocate = value; }
         public string[] MoreInfoLocate { get => moreInfoLocate; set => moreInfoLocate = value; }
 
-        public DriverItemView()
-        {
+        //public DriverItemView()
+        //{
 
-        }
+        //}
 
-        public DriverItemView(string GoToUrl)
+        public DriverItemView(string GoToUrl="")
         {
             this.GoToUrl = GoToUrl;
-            GetInfos(GoToUrl);
+            //GetInfos(GoToUrl);
             dv = new DriverItemController();
+
+            //初始化
+            BodyString = string.Empty;
+            reviewiteminfo = new string[] { string.Empty, string.Empty };
+            nextPageLocate = new string[] { string.Empty, string.Empty };
+            moreInfoLocate = new string[] { string.Empty, string.Empty };
+            fields = new List<string[]>();
+            infos = new List<string[]>();
         }
 
         public void GetInfos(string GoToUrl)
@@ -51,7 +60,7 @@ namespace WpfApp1.Test
                 {
                     driver.Navigate().GoToUrl(GoToUrl);
                     OpenQA.Selenium.Support.UI.WebDriverWait webDriverWait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(13));
-                    webDriverWait.Until(d => { return driver; });
+                    webDriverWait.Until(d => { return true; });
                     new Actions(driver).SendKeys(Keys.Control + Keys.End).Perform();
                     webDriverWait.Until(d => {
                         try
@@ -80,15 +89,26 @@ namespace WpfApp1.Test
                         }
                     });
 
-                    this.BodyString = driver.FindElement(By.TagName("body")).Text;
-
                     try
                     {
                         while (true)
                         {
                             try
                             {
-                                driver.FindElements(MyDetermineBy(moreInfoLocate));
+                                webDriverWait.Until(d => {
+                                    try
+                                    {
+                                        (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                                        driver.FindElement(MyDetermineBy(moreInfoLocate)).Click();
+                                        return true;
+                                    }
+                                    catch (Exception)
+                                    {
+                                        (new Actions(driver)).SendKeys(Keys.Control + Keys.Home).Perform();
+                                        return false;
+                                    }
+                                });
+                                //driver.FindElement(MyDetermineBy(moreInfoLocate)).Click();
                             }
                             catch (Exception) { }
                             if (reviewiteminfo!=null)
@@ -139,7 +159,7 @@ namespace WpfApp1.Test
                                 }).Text;
                                 infos.Add(l);
                             }
-                            if (driver.FindElement(MyDetermineBy(nextPageLocate)).GetAttribute("href") != "" && driver.FindElement(MyDetermineBy(nextPageLocate)).GetAttribute("href") != string.Empty && driver.FindElement(MyDetermineBy(nextPageLocate)).GetAttribute("href") != null && nextPageLocate.Equals(new string[] { string.Empty, string.Empty }))
+                            if (driver.FindElement(MyDetermineBy(nextPageLocate)).GetAttribute("href") != "" && driver.FindElement(MyDetermineBy(nextPageLocate)).GetAttribute("href") != string.Empty && driver.FindElement(MyDetermineBy(nextPageLocate)).GetAttribute("href") != null && !nextPageLocate.Equals(new string[] { string.Empty, string.Empty }))
                             {
                                 driver.FindElement(MyDetermineBy(nextPageLocate)).Click();
                             }
@@ -165,8 +185,17 @@ namespace WpfApp1.Test
                             catch (Exception) { break; }
                         }
                     }
-                    catch (Exception) { 
+                    catch (Exception) {
                         //MessageBox.Show(e.Message); 
+                    }
+
+                    try
+                    {
+                        this.BodyString = driver.FindElement(By.TagName("body")).Text;
+                    }
+                    catch (Exception)
+                    {
+                        this.BodyString = "";
                     }
                 }
 

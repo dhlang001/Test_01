@@ -101,8 +101,8 @@
                     </GroupBox>
                 </Grid>
                 <DockPanel HorizontalAlignment="Center">
-                    <Button Content="开始执行" Click="Btn_Start" FontSize="16" Width="140" Margin="0,0,16,0"/>
-                    <Button Content="导出为..." Click="ButtonExport_Click" FontSize="16" Width="140"/>
+                    <Button Content="开始执行" Click="Btn_Start" Width="140" Margin="0,0,16,0"/>
+                    <Button Content="导出为..." Click="ButtonExport_Click" Width="140"/>
                 </DockPanel>
             </StackPanel>
             <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch"/>

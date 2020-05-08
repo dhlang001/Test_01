@@ -38,16 +38,6 @@ namespace WpfApp1
 
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            ListInfo.Columns[Convert.ToInt32((sender as CheckBox).Tag.ToString())].Visibility = Visibility.Visible;
-        }
-
-        private void CheckBox_UnChecked(object sender, RoutedEventArgs e)
-        {
-            ListInfo.Columns[Convert.ToInt32((sender as CheckBox).Tag.ToString())].Visibility = Visibility.Hidden;
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             TextBlock t1 = new TextBlock();
@@ -68,17 +58,43 @@ namespace WpfApp1
             }
         }
 
+        /// <summary>
+        /// 开始执行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_Start(object sender, RoutedEventArgs e)
         {
             if (SetUrl.Text!="")
             {
                 //防止空数据
-                if ((reviewitem.IsChecked == true && _myView.Reviewiteminfo[1] == "") || (NextPage.IsChecked == true && _myView.NextPageLocate[1] == ""))
+                if (reviewitem.IsChecked == true && (reviewitemLocate.Text == string.Empty || ((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
+                {
+                    MessageBox.Show("非法数值");
+                }
+                else if (NextPage.IsChecked == true && (NextPageLocate.Text == string.Empty || ((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
+                {
+                    MessageBox.Show("非法数值");
+                }
+                else if (MoreInfo.IsChecked == true && (MoreInfoLocate.Text == string.Empty || ((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
                 {
                     MessageBox.Show("非法数值");
                 }
                 else
                 {
+                    if (reviewitem.IsChecked == true)
+                    {
+                        string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
+                        _myView.Reviewiteminfo = new string[] { asd, reviewitemLocate.Text };
+                    }
+                    if (NextPage.IsChecked == true)
+                    {
+                        _myView.NextPageLocate = new string[] { (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString() , NextPageLocate.Text };
+                    }
+                    if (MoreInfo.IsChecked == true)
+                    {
+                        _myView.MoreInfoLocate = new string[] { (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), MoreInfoLocate.Text };
+                    }
                     _myView.GetInfos(SetUrl.Text);
                     List<string[]> vs = _myView.Infos;
                     int dataColumns = vs.Count;
@@ -112,24 +128,31 @@ namespace WpfApp1
 
         private void Button_Click_Create(object sender, RoutedEventArgs e)
         {
-            ListInfo.Columns.Clear();
-            d1 = null;
-            d1 = new DataTable();
-            DataColumn _columnHead = new DataColumn("序号", typeof(int));
-            _columnHead.AutoIncrement = true;
-            _columnHead.AutoIncrementSeed = 1;
-            d1.Columns.Add(_columnHead);
-            for (int i = 0; i < MyLable.Items.Count; i++)
+            if (MyLable.Items.Count!=0)
             {
-                DataColumn _columns = new DataColumn("字段" + i, typeof(string))
+                ListInfo.Columns.Clear();
+                d1 = null;
+                d1 = new DataTable();
+                DataColumn _columnHead = new DataColumn("序号", typeof(int));
+                _columnHead.AutoIncrement = true;
+                _columnHead.AutoIncrementSeed = 1;
+                d1.Columns.Add(_columnHead);
+                for (int i = 0; i < MyLable.Items.Count; i++)
                 {
-                    ReadOnly = false
-                };
-                d1.Columns.Add(_columns);
-            }
-            ListInfo.ItemsSource = d1.DefaultView;
+                    DataColumn _columns = new DataColumn("字段" + i, typeof(string))
+                    {
+                        ReadOnly = false
+                    };
+                    d1.Columns.Add(_columns);
+                }
+                ListInfo.ItemsSource = d1.DefaultView;
 
-            _myView.GetFields(MyLable.Items);
+                _myView.GetFields(MyLable.Items);
+            }
+            else
+            {
+                MessageBox.Show("可创建表为空");
+            }
 
         }
 
@@ -172,6 +195,7 @@ namespace WpfApp1
 
         private void reviewitem_Checked(object sender, RoutedEventArgs e)
         {
+            //reviewitemLocate.SetBinding(TextBox.TextProperty, new Binding() { Source= new ReviewItem(), Path = new PropertyPath("ReviewContent"), Mode = BindingMode.TwoWay });
             if (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem != null)
             {
                 string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
@@ -181,7 +205,7 @@ namespace WpfApp1
 
         private void reviewitem_Unchecked(object sender, RoutedEventArgs e)
         {
-            _myView.Reviewiteminfo = null;
+            _myView.Reviewiteminfo = new string[] { string.Empty, string.Empty };
         }
 
         private void NextPage_Checked(object sender, RoutedEventArgs e)
@@ -194,7 +218,7 @@ namespace WpfApp1
 
         private void NextPage_Unchecked(object sender, RoutedEventArgs e)
         {
-            _myView.NextPageLocate = null;
+            _myView.NextPageLocate = new string[] { string.Empty, string.Empty };
         }
 
         private void MoreInfo_Checked(object sender, RoutedEventArgs e)
@@ -207,7 +231,14 @@ namespace WpfApp1
 
         private void MoreInfo_Unchecked(object sender, RoutedEventArgs e)
         {
-            _myView.MoreInfoLocate = null;
+            _myView.MoreInfoLocate = new string[] { string.Empty, string.Empty };
         }
     }
+
+    //public class ReviewItem
+    //{
+    //    public string ReviewContent { get; set; }
+    //    public string NextPageContent { get; set; }
+    //    public string MoreContent { get; set; }
+    //}
 }
