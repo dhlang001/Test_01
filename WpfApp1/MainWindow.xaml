@@ -39,7 +39,7 @@
                                     <StackPanel>
                                         <CheckBox Name="reviewitem" Checked="reviewitem_Checked" Unchecked="reviewitem_Unchecked">
                                             <DockPanel>
-                                                <TextBlock Text="列表据定位" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                <TextBlock Text="头数据定位" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                 <TextBox Name="reviewitemLocate" MinWidth="210"/>
                                                 <TextBlock Text="定位方式：" VerticalAlignment="Center" Margin="10,0,0,0"/>
                                                 <ComboBox MinWidth="45">
