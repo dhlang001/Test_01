@@ -2,7 +2,8 @@
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 * text=auto
-*.cs     diff=csharp
+*.cs linguist-language=csharp
+*.xaml linguist-language=csharp
 
 ###############################################################################
 # Set default behavior for command prompt diff.
