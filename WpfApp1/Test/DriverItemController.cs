@@ -12,6 +12,7 @@ using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using NPOI.SS.Formula.Functions;
 
 namespace WpfApp1.Test
 {
@@ -161,5 +162,6 @@ namespace WpfApp1.Test
                     return "=" + cell.CellFormula;
             }
         }
+
     }
 }

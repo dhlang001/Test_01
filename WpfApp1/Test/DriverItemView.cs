@@ -59,7 +59,7 @@ namespace WpfApp1.Test
                 using (IWebDriver driver = new FirefoxDriver())
                 {
                     driver.Navigate().GoToUrl(GoToUrl);
-                    OpenQA.Selenium.Support.UI.WebDriverWait webDriverWait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(13));
+                    OpenQA.Selenium.Support.UI.WebDriverWait webDriverWait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(8));
                     webDriverWait.Until(d => { return true; });
                     new Actions(driver).SendKeys(Keys.Control + Keys.End).Perform();
                     webDriverWait.Until(d => {
