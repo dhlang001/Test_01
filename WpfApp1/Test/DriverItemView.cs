@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -66,6 +67,7 @@ namespace WpfApp1.Test
                         try
                         {
                             (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                            Thread.Sleep(new TimeSpan(0, 0, 1));
                             return driver.FindElement(By.TagName("*"));
                         }
                         catch (Exception)
@@ -79,6 +81,7 @@ namespace WpfApp1.Test
                         try
                         {
                             (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                            Thread.Sleep(new TimeSpan(0, 0, 1));
                             driver.FindElement(By.TagName("*"));
                             return true;
                         }
@@ -99,6 +102,7 @@ namespace WpfApp1.Test
                                     try
                                     {
                                         (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                                        Thread.Sleep(new TimeSpan(0, 0, 1));
                                         driver.FindElement(MyDetermineBy(moreInfoLocate)).Click();
                                         return true;
                                     }
@@ -117,6 +121,7 @@ namespace WpfApp1.Test
                                     try
                                     {
                                         (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                                        Thread.Sleep(new TimeSpan(0, 0, 1));
                                         return driver.FindElement(MyDetermineBy(reviewiteminfo));
                                     }
                                     catch (Exception)
@@ -149,6 +154,7 @@ namespace WpfApp1.Test
                                     try
                                     {
                                         (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                                        Thread.Sleep(new TimeSpan(0, 0, 1));
                                         return driver.FindElement(MyDetermineBy(fields[0]));
                                     }
                                     catch (Exception)
@@ -173,6 +179,7 @@ namespace WpfApp1.Test
                                     try
                                     {
                                         (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                                        Thread.Sleep(new TimeSpan(0, 0, 1));
                                         return driver.FindElement(MyDetermineBy(reviewiteminfo));
                                     }
                                     catch (Exception)

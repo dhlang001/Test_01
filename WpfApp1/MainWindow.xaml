@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="850" Icon="Img/表情303.png">
+        Title="MainWindow" Height="500" Width="850" Icon="Img/表情303.png" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="60" Width="150"/>
@@ -115,6 +115,7 @@
                     <Button Content="保存配置" Click="ButtonStSave_Click" Width="100" Margin="0,0,16,0"/>
                     <Button Content="导出为..." Click="ButtonExport_Click" Width="100"/>
                 </DockPanel>
+                <ProgressBar x:Name="myProgressBar" Height="19"/>
             </StackPanel>
             <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch"/>
             <DataGrid Grid.Row="2" MaxColumnWidth="210" x:Name="ListInfo" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"

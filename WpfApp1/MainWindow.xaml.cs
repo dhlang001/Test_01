@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +24,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         SettingItemCtrl stCtrl;
+        private BackgroundWorker bgworker = new BackgroundWorker();
         private DataTable d1 = new DataTable();
         private Test.DriverItemView _myView;
         private Test.DriverItemController _myCtrler;
@@ -68,56 +71,76 @@ namespace WpfApp1
         /// <param name="e"></param>
         private void Btn_Start(object sender, RoutedEventArgs e)
         {
-            if (SetUrl.Text != "")
+            this.myProgressBar.Value = 0;
+            Action action = new Action(MyBtnStart);
+            Thread t = new Thread((ThreadStart)delegate () {
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, action);
+            });
+            t.Start();
+        }
+
+        private void MyBtnStart()
+        {
+            this.Dispatcher.BeginInvoke(new Action(delegate
             {
-                //防止空数据
-                if (reviewitem.IsChecked == true && (reviewitemLocate.Text == string.Empty || ((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
+                if (SetUrl.Text != "")
                 {
-                    MessageBox.Show("非法数值");
-                }
-                else if (NextPage.IsChecked == true && (NextPageLocate.Text == string.Empty || ((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
-                {
-                    MessageBox.Show("非法数值");
-                }
-                else if (MoreInfo.IsChecked == true && (MoreInfoLocate.Text == string.Empty || ((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
-                {
-                    MessageBox.Show("非法数值");
+                    //防止空数据
+                    if (reviewitem.IsChecked == true && (reviewitemLocate.Text == string.Empty || ((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
+                    {
+                        MessageBox.Show("非法数值");
+                    }
+                    else if (NextPage.IsChecked == true && (NextPageLocate.Text == string.Empty || ((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
+                    {
+                        MessageBox.Show("非法数值");
+                    }
+                    else if (MoreInfo.IsChecked == true && (MoreInfoLocate.Text == string.Empty || ((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem == null))
+                    {
+                        MessageBox.Show("非法数值");
+                    }
+                    else
+                    {
+                        if (reviewitem.IsChecked == true)
+                        {
+                            string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
+                            _myView.Reviewiteminfo = new string[] { asd, reviewitemLocate.Text };
+                        }
+                        if (NextPage.IsChecked == true)
+                        {
+                            _myView.NextPageLocate = new string[] { (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), NextPageLocate.Text };
+                        }
+                        if (MoreInfo.IsChecked == true)
+                        {
+                            _myView.MoreInfoLocate = new string[] { (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), MoreInfoLocate.Text };
+                        }
+                        this.myProgressBar.Value = 20;
+
+                        _myView.GetInfos(SetUrl.Text);
+
+                        List<string[]> vs = _myView.Infos;
+                        int dataColumns = vs.Count;
+                        this.myProgressBar.Value = 90;
+                        for (int i = 0; i < dataColumns; i++)
+                        {
+                            DataRow row1 = d1.NewRow();
+                            //循环添加行数据
+                            for (int j = 0; j < ListInfo.Columns.Count - 1; j++)
+                            {
+                                row1[d1.Columns[j + 1].ColumnName] = vs[i][j];
+                            }
+                            d1.Rows.Add(row1);
+                            this.myProgressBar.Value += (10 / dataColumns);
+                        }
+                    }
                 }
                 else
                 {
-                    if (reviewitem.IsChecked == true)
-                    {
-                        string asd = (((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString();
-                        _myView.Reviewiteminfo = new string[] { asd, reviewitemLocate.Text };
-                    }
-                    if (NextPage.IsChecked == true)
-                    {
-                        _myView.NextPageLocate = new string[] { (((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), NextPageLocate.Text };
-                    }
-                    if (MoreInfo.IsChecked == true)
-                    {
-                        _myView.MoreInfoLocate = new string[] { (((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedItem as ComboBoxItem).Tag.ToString(), MoreInfoLocate.Text };
-                    }
-                    _myView.GetInfos(SetUrl.Text);
-                    List<string[]> vs = _myView.Infos;
-                    int dataColumns = vs.Count;
-                    for (int i = 0; i < dataColumns; i++)
-                    {
-                        DataRow row1 = d1.NewRow();
-                        //循环添加行数据
-                        for (int j = 0; j < ListInfo.Columns.Count - 1; j++)
-                        {
-                            row1[d1.Columns[j + 1].ColumnName] = vs[i][j];
-                        }
-                        d1.Rows.Add(row1);
-                    }
+                    MessageBox.Show("Url链接不能为空");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Url链接不能为空");
-            }
+                this.myProgressBar.Value = 100;
+            }));
         }
+
 
         private void Button_Click_Del(object sender, RoutedEventArgs e)
         {
@@ -279,50 +302,57 @@ namespace WpfApp1
 
         private void ButtonLoadSetting_Click(object sender, RoutedEventArgs e)
         {
-            List<Settings> sts = stCtrl.ReadXml();
-            SetUrl.Text = sts[U_ST.SelectedIndex].UrlST;
-            try
+            if (U_ST.SelectedItem!=null)
             {
-                reviewitem.IsChecked = Convert.ToBoolean(sts[U_ST.SelectedIndex].ReviewItemST[0]);
-                reviewitemLocate.Text = sts[U_ST.SelectedIndex].ReviewItemST[1];
-                ((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].ReviewItemST[2]);
-            }
-            catch (Exception)
-            {
-                reviewitem.IsChecked = null;
-                reviewitemLocate.Text = sts[U_ST.SelectedIndex].ReviewItemST[1];
-                ((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].ReviewItemST[2]);
-            }
-            try
-            {
-                NextPage.IsChecked = Convert.ToBoolean(sts[U_ST.SelectedIndex].NextPageST[0]);
-                NextPageLocate.Text = sts[U_ST.SelectedIndex].NextPageST[1];
-                ((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].NextPageST[2]);
-            }
-            catch (Exception)
-            {
-                NextPage.IsChecked = null;
-                NextPageLocate.Text = sts[U_ST.SelectedIndex].NextPageST[1];
-                ((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].NextPageST[2]);
-            }
-            try
-            {
-                MoreInfo.IsChecked = Convert.ToBoolean(sts[U_ST.SelectedIndex].MoreInfoST[0]);
-                MoreInfoLocate.Text = sts[U_ST.SelectedIndex].MoreInfoST[1];
-                ((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].MoreInfoST[2]);
-            }
-            catch (Exception)
-            {
-                MoreInfo.IsChecked = null;
-                MoreInfoLocate.Text = sts[U_ST.SelectedIndex].MoreInfoST[1];
-                ((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].MoreInfoST[2]);
-            }
+                List<Settings> sts = stCtrl.ReadXml();
+                SetUrl.Text = sts[U_ST.SelectedIndex].UrlST;
+                try
+                {
+                    reviewitem.IsChecked = Convert.ToBoolean(sts[U_ST.SelectedIndex].ReviewItemST[0]);
+                    reviewitemLocate.Text = sts[U_ST.SelectedIndex].ReviewItemST[1];
+                    ((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].ReviewItemST[2]);
+                }
+                catch (Exception)
+                {
+                    reviewitem.IsChecked = null;
+                    reviewitemLocate.Text = sts[U_ST.SelectedIndex].ReviewItemST[1];
+                    ((reviewitem.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].ReviewItemST[2]);
+                }
+                try
+                {
+                    NextPage.IsChecked = Convert.ToBoolean(sts[U_ST.SelectedIndex].NextPageST[0]);
+                    NextPageLocate.Text = sts[U_ST.SelectedIndex].NextPageST[1];
+                    ((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].NextPageST[2]);
+                }
+                catch (Exception)
+                {
+                    NextPage.IsChecked = null;
+                    NextPageLocate.Text = sts[U_ST.SelectedIndex].NextPageST[1];
+                    ((NextPage.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].NextPageST[2]);
+                }
+                try
+                {
+                    MoreInfo.IsChecked = Convert.ToBoolean(sts[U_ST.SelectedIndex].MoreInfoST[0]);
+                    MoreInfoLocate.Text = sts[U_ST.SelectedIndex].MoreInfoST[1];
+                    ((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].MoreInfoST[2]);
+                }
+                catch (Exception)
+                {
+                    MoreInfo.IsChecked = null;
+                    MoreInfoLocate.Text = sts[U_ST.SelectedIndex].MoreInfoST[1];
+                    ((MoreInfo.Content as DockPanel).Children[3] as ComboBox).SelectedIndex = Convert.ToInt32(sts[U_ST.SelectedIndex].MoreInfoST[2]);
+                }
 
-            MyLable.Items.Clear();
-            for (int i = 0; i <sts[U_ST.SelectedIndex].LableST.Count; i++)
-            {
-                MyLable.Items.Add(sts[U_ST.SelectedIndex].LableST[i]);
+                MyLable.Items.Clear();
+                for (int i = 0; i < sts[U_ST.SelectedIndex].LableST.Count; i++)
+                {
+                    MyLable.Items.Add(sts[U_ST.SelectedIndex].LableST[i]);
+                }
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
 
         }
     }
