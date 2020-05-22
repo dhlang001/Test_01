@@ -17,7 +17,12 @@
                 <Button DockPanel.Dock="Right" Width="30" Content="删除" Margin="10,0,0,0" Click="ButtonDelStItem_Click"/>
                 <Button DockPanel.Dock="Right" Width="30" Content="加载" Click="ButtonLoadSetting_Click"/>
             </DockPanel>
-            <ListBox x:Name="U_ST" BorderThickness="0" MouseDoubleClick="U_ST_MouseDoubleClick">
+            <ListBox x:Name="U_ST" BorderThickness="0">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
             </ListBox>
         </DockPanel>
         <GridSplitter Grid.Column="1" Width="3" HorizontalAlignment="Stretch"/>

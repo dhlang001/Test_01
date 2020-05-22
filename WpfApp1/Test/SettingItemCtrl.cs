@@ -53,14 +53,14 @@ namespace WpfApp1.Test
                 st.NextPageST = new string[] {
                     xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[2].ChildNodes[0].InnerText,
                     xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[2].ChildNodes[1].InnerText,
-                    xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[2].ChildNodes[2].Value
+                    xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[2].ChildNodes[2].InnerText
                 };
                 st.MoreInfoST = new string[] {
                     xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[3].ChildNodes[0].InnerText,
                     xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[3].ChildNodes[1].InnerText,
                     xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[3].ChildNodes[2].InnerText
                 };
-                for (int j = 0; j < xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[3].ChildNodes.Count; j++)
+                for (int j = 0; j < xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[4].ChildNodes.Count; j++)
                 {
                     TextBlock text = new TextBlock();
                     text.Text = xmldoc.SelectSingleNode("Settings").ChildNodes[i].ChildNodes[4].ChildNodes[j].ChildNodes[0].InnerText;
@@ -130,7 +130,8 @@ namespace WpfApp1.Test
 
         public void DelXmlData(int itemCount)
         {
-            xmldoc.SelectSingleNode("Settings").RemoveChild(xmldoc.SelectSingleNode("Settings").ChildNodes[itemCount]);
+            xmldoc.SelectSingleNode("Settings").RemoveChild(xmldoc.SelectSingleNode("Settings").ChildNodes.Item(itemCount));
+            xmldoc.Save(@".\Data\Setting.xml");
         }
 
         public void LoadData(string urlST, string[] reviewItemST, string[] NextPageST, string[] MoreInfoST, List<TextBlock> LableST)

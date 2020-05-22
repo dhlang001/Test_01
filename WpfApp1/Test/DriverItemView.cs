@@ -60,7 +60,7 @@ namespace WpfApp1.Test
                 using (IWebDriver driver = new FirefoxDriver())
                 {
                     driver.Navigate().GoToUrl(GoToUrl);
-                    OpenQA.Selenium.Support.UI.WebDriverWait webDriverWait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(8));
+                    OpenQA.Selenium.Support.UI.WebDriverWait webDriverWait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(6));
                     webDriverWait.Until(d => { return true; });
                     new Actions(driver).SendKeys(Keys.Control + Keys.End).Perform();
                     webDriverWait.Until(d => {
@@ -98,39 +98,46 @@ namespace WpfApp1.Test
                         {
                             try
                             {
-                                webDriverWait.Until(d => {
-                                    try
-                                    {
-                                        (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
-                                        Thread.Sleep(new TimeSpan(0, 0, 1));
-                                        driver.FindElement(MyDetermineBy(moreInfoLocate)).Click();
-                                        return true;
-                                    }
-                                    catch (Exception)
-                                    {
-                                        (new Actions(driver)).SendKeys(Keys.Control + Keys.Home).Perform();
-                                        return false;
-                                    }
-                                });
+                                if (moreInfoLocate[0]!="")
+                                {
+                                    webDriverWait.Until(d => {
+                                        try
+                                        {
+                                            (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                                            Thread.Sleep(new TimeSpan(0, 0, 1));
+                                            driver.FindElement(MyDetermineBy(moreInfoLocate)).Click();
+                                            return true;
+                                        }
+                                        catch (Exception)
+                                        {
+                                            (new Actions(driver)).SendKeys(Keys.Control + Keys.Home).Perform();
+                                            return false;
+                                        }
+                                    });
+                                }
                                 //driver.FindElement(MyDetermineBy(moreInfoLocate)).Click();
                             }
                             catch (Exception) { }
                             if (reviewiteminfo!=null)
                             {
-                                webDriverWait.Until(d => {
-                                    try
-                                    {
-                                        (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
-                                        Thread.Sleep(new TimeSpan(0, 0, 1));
-                                        return driver.FindElement(MyDetermineBy(reviewiteminfo));
-                                    }
-                                    catch (Exception)
-                                    {
-                                        (new Actions(driver)).SendKeys(Keys.Control + Keys.Home).Perform();
-                                        return null;
-                                    }
-                                });
-                                foreach (var item in driver.FindElements(MyDetermineBy(reviewiteminfo)))
+                                try
+                                {
+                                    webDriverWait.Until(d => {
+                                        try
+                                        {
+                                            (new Actions(driver)).SendKeys(Keys.Control + Keys.End).Perform();
+                                            Thread.Sleep(new TimeSpan(0, 0, 1));
+                                            return driver.FindElement(MyDetermineBy(reviewiteminfo));
+                                        }
+                                        catch (Exception)
+                                        {
+                                            (new Actions(driver)).SendKeys(Keys.Control + Keys.Home).Perform();
+                                            return null;
+                                        }
+                                    });
+                                }
+                                catch (Exception) { }
+                                foreach (var item in driver.FindElements(MyDetermineBy(reviewiteminfo[0]!=""?reviewiteminfo:new string[] {"L","body" })))
                                 {
                                     string[] l = new string[fields.Count];
                                     for (int i = 0; i < fields.Count; i++)
@@ -192,7 +199,7 @@ namespace WpfApp1.Test
                             catch (Exception) { break; }
                         }
                     }
-                    catch (Exception) {
+                    catch (Exception e) {
                         //MessageBox.Show(e.Message); 
                     }
 

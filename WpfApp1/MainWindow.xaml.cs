@@ -277,18 +277,9 @@ namespace WpfApp1
             U_ST.Items.Clear();
             for (int i = 0; i < x; i++)
             {
-                U_ST.Items.Add(new ListBoxItem() { Content = "任务" + (i + 1) });
+                U_ST.Items.Add(new ListBoxItem() { Content = "任务" + (i + 1) ,});
             }
 
-        }
-
-        private void U_ST_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (U_ST.SelectedItem != null)
-            {
-                stCtrl.DelXmlData(U_ST.SelectedIndex);
-                MessageBox.Show((U_ST.SelectedItem as TreeViewItem).Header.ToString());
-            }
         }
 
         private void ButtonDelStItem_Click(object sender, RoutedEventArgs e)
@@ -302,7 +293,24 @@ namespace WpfApp1
 
         private void ButtonLoadSetting_Click(object sender, RoutedEventArgs e)
         {
-            if (U_ST.SelectedItem!=null)
+            LoadSettings();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            LoadSettings();
+            //MessageBox.Show("asdasdasd");
+        }
+
+        //加载设置
+        private void LoadSettings()
+        {
+            if (U_ST.SelectedItem != null)
             {
                 List<Settings> sts = stCtrl.ReadXml();
                 SetUrl.Text = sts[U_ST.SelectedIndex].UrlST;
@@ -349,10 +357,6 @@ namespace WpfApp1
                     MyLable.Items.Add(sts[U_ST.SelectedIndex].LableST[i]);
                 }
             }
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
 
         }
     }
