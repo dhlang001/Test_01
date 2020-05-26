@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfApp1.Test;
+using WpfApp1.Sharp;
 
 namespace WpfApp1
 {
@@ -26,14 +26,14 @@ namespace WpfApp1
         SettingItemCtrl stCtrl;
         private BackgroundWorker bgworker = new BackgroundWorker();
         private DataTable d1 = new DataTable();
-        private Test.DriverItemView _myView;
-        private Test.DriverItemController _myCtrler;
+        private Sharp.DriverItemView _myView;
+        private Sharp.DriverItemController _myCtrler;
         private int x = 0;
 
         public MainWindow()
         {
-            InitializeComponent(); _myView = new Test.DriverItemView();
-            _myCtrler = new Test.DriverItemController();
+            InitializeComponent(); _myView = new Sharp.DriverItemView();
+            _myCtrler = new Sharp.DriverItemController();
             //Messenger.Default.Send(ListInfo, Test.MessageToken.SetDataGrid); 
             stCtrl = new SettingItemCtrl();
             int x = stCtrl.LoadXml();

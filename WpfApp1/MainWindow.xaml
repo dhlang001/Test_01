@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="850" Icon="Img/表情303.png" Loaded="Window_Loaded">
+        Title="网站信息采集工具" Height="500" Width="850" Icon="Img/表情303.png" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="60" Width="150"/>

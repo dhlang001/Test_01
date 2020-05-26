@@ -11,7 +11,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
 
-namespace WpfApp1.Test
+namespace WpfApp1.Sharp
 {
     class DriverItemView
     {

@@ -124,13 +124,13 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test\DriverItemController.cs" />
-    <Compile Include="Test\DriverItemView.cs" />
+    <Compile Include="Sharp\DriverItemController.cs" />
+    <Compile Include="Sharp\DriverItemView.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Test\SettingItemCtrl.cs" />
+    <Compile Include="Sharp\SettingItemCtrl.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Org.BouncyCastle.Bcpg;
 
-namespace WpfApp1.Test
+namespace WpfApp1.Sharp
 {
     class SettingItemCtrl
     {

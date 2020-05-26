@@ -14,7 +14,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using NPOI.SS.Formula.Functions;
 
-namespace WpfApp1.Test
+namespace WpfApp1.Sharp
 {
     class DriverItemController
     {
